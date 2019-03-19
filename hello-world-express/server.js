@@ -16,9 +16,27 @@ server.use(express.json());
 
 // CRUD Operations
 // GET requests => READ data
-server.get('/hobbits', (req, res) => { // this function is a request handler
-    res.send('Welcome to Hobbiton');
-});
+server.get('/hobbits', (req, res) => {
+    // query string parameters get added to req.query
+    const sortField = req.query.sortby || 'id';
+    const hobbits = [
+      {
+        id: 1,
+        name: 'Samwise Gamgee',
+      },
+      {
+        id: 2,
+        name: 'Frodo Baggins',
+      },
+    ];
+  
+    // apply the sorting
+    const response = hobbits.sort(
+      (a, b) => (a[sortField] < b[sortField] ? -1 : 1)
+    );
+  
+    res.status(200).json(response);
+  });
 
 // POST requests => CREATE data
 server.post('/hobbits', (req, res) => {
@@ -27,12 +45,20 @@ server.post('/hobbits', (req, res) => {
 
 // PUT requests => UPDATE data
 server.put('/hobbits', (req, res) => {
-    res.status(200).json({ url: '/hobbits', operation: 'PUT' });
+    res.status(200).json({ 
+        url: '/hobbits', 
+        operation: 'PUT' 
+    });
 });
 
 // DELETE requests => DESTROY/DELETE data
-server.delete('/hobbits', (req, res) => {
-    res.status(204);
+server.delete('/hobbits/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(req.params);
+    res.status(200).json({ 
+        url: `/hobbits/${id}`, 
+        operation: `DELETE for hobbit with id ${id}` 
+    });
 });
 
 server.listen(port, () => {
