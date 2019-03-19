@@ -17,12 +17,17 @@ server.use(express.json());
 // CRUD Operations
 // GET requests => READ data
 server.get('/hobbits', (req, res) => {
+    console.log(req.query);
     // query string parameters get added to req.query
     const sortField = req.query.sortby || 'id';
     const hobbits = [
       {
         id: 1,
         name: 'Samwise Gamgee',
+      },
+      {
+        id: 3,
+        name: 'Bilbo Baggins',
       },
       {
         id: 2,
@@ -39,16 +44,29 @@ server.get('/hobbits', (req, res) => {
   });
 
 // POST requests => CREATE data
+let hobbits = [
+    {
+      id: 1,
+      name: 'Bilbo Baggins',
+      age: 111,
+    },
+    {
+      id: 2,
+      name: 'Frodo Baggins',
+      age: 33,
+    },
+];
+let nextId = 3;
+  
+// and modify the post endpoint like so:
 server.post('/hobbits', (req, res) => {
-    res.status(201).json({ url: '/hobbits', operation: 'POST' });
-});
-
-// PUT requests => UPDATE data
-server.put('/hobbits', (req, res) => {
-    res.status(200).json({ 
-        url: '/hobbits', 
-        operation: 'PUT' 
-    });
+    const hobbit = req.body;
+    console.log(req.body);
+    hobbit.id = nextId++;
+  
+    hobbits.push(hobbit);
+  
+    res.status(201).json(hobbits);
 });
 
 // DELETE requests => DESTROY/DELETE data
