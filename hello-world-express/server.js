@@ -79,6 +79,11 @@ server.delete('/hobbits/:id', (req, res) => {
     });
 });
 
+// PUT requests => UPDATE data
+server.put('/hobbits', (req, res) => {
+    res.status(200).json({ url: '/hobbits', opeation: 'PUT' });
+});
+
 server.listen(port, () => {
     console.log(`server listening on ${port}`);
 });
