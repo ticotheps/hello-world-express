@@ -26,9 +26,31 @@ function logger(req, res, next) {
   next();
 }
 
+// Global Middleware
+function atGate(req, res, next) {
+  console.log('At the gate, about to be eaten');
+
+  next();
+}
+
+
+function auth(req, res, next) {
+  if (req.url === '/mellon') {
+    next();
+  } else {
+    res.send('You shall not pass!');
+  }
+}
 
 
 server.use(logger);
+server.use(atGate);
+
+server.get('/mellon', auth, (req, res) => {
+  console.log('Gate opening...');
+  console.log('Inside and safe!');
+  res.send('Welcome Traveler!');
+})
 
 // CRUD Operations
 // GET requests => READ data
