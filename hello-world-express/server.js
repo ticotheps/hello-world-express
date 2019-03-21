@@ -16,8 +16,19 @@ server.use(express.json());
 
 
 // write our own custom middleware
+function logger(req, res, next) {
+  console.log(
+    `[${new Date().toISOString()}] ${req.method} to ${req.url} ${req.get(
+      'Origin'
+    )}`
+  );
+
+  next();
+}
 
 
+
+server.use(logger);
 
 // CRUD Operations
 // GET requests => READ data
