@@ -14,6 +14,15 @@ server.use(express.json());
 //     res.end('Hello World, from NodeJS');
 // });
 
+
+// write our own custom middleware
+
+// This is a fallback middleware that will display this message whenver someone
+// enters in an endpoint that doesn't exist in our server.js file
+server.use(function(req, res) {
+  res.status(404).send(`Ain't nobody got time for dat!`);
+});
+
 // CRUD Operations
 // GET requests => READ data
 server.get('/hobbits', (req, res) => {
