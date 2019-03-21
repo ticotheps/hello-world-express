@@ -17,11 +17,7 @@ server.use(express.json());
 
 // write our own custom middleware
 
-// This is a fallback middleware that will display this message whenver someone
-// enters in an endpoint that doesn't exist in our server.js file
-server.use(function(req, res) {
-  res.status(404).send(`Ain't nobody got time for dat!`);
-});
+
 
 // CRUD Operations
 // GET requests => READ data
@@ -101,6 +97,14 @@ server.put('/hobbits/:id', (req, res) => {
       res.status(200).json(hobbit);
     }
   });
+
+// This is a fallback middleware that will display this message whenver someone
+// enters in an endpoint that doesn't exist in our server.js file
+// The order that you plug in your global middleware matters because everything
+// runs in a top down direction.
+server.use(function(req, res) {
+  res.status(404).send(`Ain't nobody got time for dat!`);
+});
 
 server.listen(port, () => {
     console.log(`server listening on ${port}`);
