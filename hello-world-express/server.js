@@ -54,7 +54,7 @@ server.get('/mellon', auth, (req, res) => {
 
 // CRUD Operations
 // GET requests => READ data
-server.get('/hobbits', (req, res) => {
+server.get('/hobbits', auth, (req, res) => {
     console.log(req.query);
     // query string parameters get added to req.query
     const sortField = req.query.sortby || 'id';
